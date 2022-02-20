@@ -1,28 +1,45 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+    <Main v-if="!mobileView" />
+    <Mobileview v-else />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Main from "../src/components/Main.vue";
+import Mobileview from "../src/components/Mobileview.vue";
 
 export default {
-  name: 'App',
+  data: () => {
+    return {
+      mobileView: true,
+    }
+  },
   components: {
-    HelloWorld
+    Main,
+    Mobileview,
+  },
+  methods: {
+    handleView() {
+      this.mobileView = window.innerWidth <= 990;
+    }
+  },
+  created() {
+    this.handleView();
+    window.addEventListener('resize', this.handleView);
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+li {
+  list-style: none;
+  cursor: pointer;
+}
+ul {
+  display: flex;
+  padding: 0;
 }
 </style>
